@@ -143,6 +143,8 @@ class Player
             if (ra<0) ra+=2*PI;
             if (ra>2*PI) ra-=2*PI;
 
+            
+            //Draw 3D View
             let ca=this.angle-ra;
             if (ca<0) ca+=2*PI;
             if (ca>2*PI) ca-=2*PI;
