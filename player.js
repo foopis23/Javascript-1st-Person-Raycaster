@@ -151,8 +151,9 @@ class Player
             disT=disT*Math.cos(ca); //fix fish eye
 
             let lineH = (64 * 320)/disT;
-            let lineO = 150-lineH/2;
             if (lineH > 320) lineH = 320;
+            
+            let lineO = 150-lineH/2;
 
             push();
             translate(530, 0);
