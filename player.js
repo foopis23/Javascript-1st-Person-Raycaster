@@ -114,7 +114,7 @@ class Player
 
     doRayCast()
     {
-        let r,mx,my,mp,dof,rx,ry,ra,xo,yo,color;
+        let r,mx,my,mp,dof,rx,ry,ra,xo,yo,vColor, hColor;
         let rayLanded = false;
         ra = this.angle-DR*30;
         if (ra<0) ra+=2*PI;
@@ -172,7 +172,7 @@ class Player
                     hx=rx; hy=ry; 
                     disH=dist(this.x,this.y,hx,hy); 
                     dof=this.viewDistance; 
-                    color=this.MAP.tiles[mp];
+                    hColor=this.MAP.tiles[mp];
                     rayLanded = true;
                 }
                 else {
@@ -227,7 +227,7 @@ class Player
                     vy=ry; 
                     disV=dist(this.x,this.y,vx,vy); 
                     dof=this.viewDistance; 
-                    color=this.MAP.tiles[mp];
+                    vColor=this.MAP.tiles[mp];
                     rayLanded = true
                 }
                 else {
@@ -254,7 +254,7 @@ class Player
                     rx=vx;
                     ry=vy;
                     disT = disV;
-                    let cArr = this.MAP.colors[color].bright;
+                    let cArr = this.MAP.colors[vColor].bright;
                     fill(cArr[0], cArr[1], cArr[2]);
                 }
     
@@ -263,7 +263,7 @@ class Player
                     rx=hx;
                     ry=hy;
                     disT = disH;
-                    let cArr = this.MAP.colors[color].dark;
+                    let cArr = this.MAP.colors[hColor].dark;
                     fill(cArr[0], cArr[1], cArr[2]);
                 }
             }
