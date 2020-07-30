@@ -77,6 +77,37 @@ class Player
             line(this.x, this.y, this.x + Math.cos(this.angle) * 15, this.y + Math.sin(this.angle) * 15);
             noStroke();
         }
+        
+        let offsetHeight = (320/this.viewDistance);
+        let rectHeight = (320-offsetHeight)/2 - 10;
+
+        //draw roof
+        noStroke();
+        fill(this.MAP.roofColor[0], this.MAP.roofColor[1], this.MAP.roofColor[2]);
+        rect(0, 0, 480, rectHeight);
+
+        //epic fog/fade effect?
+        for (let i=0; i<2; i++)
+        {
+            fill(this.MAP.roofColor[0], this.MAP.roofColor[1], this.MAP.roofColor[2], 200 - (i*100));
+            rect(0, rectHeight+i, 480, 1);
+        }
+
+
+        //draw floor
+        noStroke();
+        fill(this.MAP.floorColor[0], this.MAP.floorColor[1], this.MAP.floorColor[2]);
+        rect(0, rectHeight + offsetHeight, 480, rectHeight + 10);
+
+        
+        //epic fog/fade effect?
+        for (let i=0; i<2; i++)
+        {
+            fill(this.MAP.floorColor[0], this.MAP.floorColor[1], this.MAP.floorColor[2], 200 - (i*100));
+            rect(0, rectHeight + offsetHeight - i, 480, 1);
+        }
+
+        pop();
 
         this.doRayCast();
     }

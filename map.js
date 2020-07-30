@@ -66,15 +66,5 @@ class Map {
         }else{
             scale(2,2);
         }
-
-        //draw roof
-        noStroke();
-        fill(this.roofColor[0], this.roofColor[1], this.roofColor[2]);
-        rect(0, 0, 480, 320/2);
-        //draw floor
-        noStroke();
-        fill(this.floorColor[0], this.floorColor[1], this.floorColor[2]);
-        rect(0, 320/2, 480, 320/2);
-        pop();
     }
 }
