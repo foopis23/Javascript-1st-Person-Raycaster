@@ -41,6 +41,13 @@ class Player
         this.y += dy;
         this.angle += da;
 
+        let mobileRotation = rotationX;
+
+        if (mobileRotation != null)
+        {
+            this.angle = mobileRotation;
+        }
+
         if (this.angle < 0)
         {
             this.angle = this.angle + 2*Math.PI;
