@@ -1,10 +1,19 @@
+const DRAW_MAP = false;
+
 let map;
 let player;
 
 function setup() {
-    createCanvas(1280, 500);
+    
+    if (DRAW_MAP)
+    {
+        createCanvas(1280, 500);
+    }else{
+        createCanvas(960, 640);
+    }
+
     map = new Map();
-    player = new Player();
+    player = new Player(map);
 }
 
 function draw() {
@@ -13,6 +22,5 @@ function draw() {
     player.update();
 
     map.draw();
-    player.drawRays(map);
     player.draw();
 }
