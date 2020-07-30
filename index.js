@@ -23,4 +23,7 @@ function draw() {
 
     map.draw();
     player.draw();
+    textSize(32);
+    fill(255);
+    text(Math.round(frameRate()), 32, 64);
 }

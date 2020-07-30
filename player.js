@@ -12,6 +12,7 @@ class Player
         this.rotateSpeed = Math.PI / 64;
         this.angle = 0;
         this.MAP = map;
+        this.viewDistance = 8;
     }
 
     update()
@@ -83,6 +84,7 @@ class Player
     doRayCast()
     {
         let r,mx,my,mp,dof,rx,ry,ra,xo,yo,color;
+        let rayLanded = false;
         ra = this.angle-DR*30;
         if (ra<0) ra+=2*PI;
         if (ra>2*PI) ra-=2*PI;
@@ -127,10 +129,10 @@ class Player
             if (ra == 0 || ra == PI ) {
                 rx=this.x;
                 ry=this.y;
-                dof=16;
+                dof=this.viewDistance;
             } 
             
-            while (dof<16)
+            while (dof<this.viewDistance)
             {
                 mx = Math.floor(rx>>6); 
                 my = Math.floor(ry>>6); 
@@ -138,8 +140,9 @@ class Player
                 if (mp > 0 && mp < this.MAP.width*this.MAP.height && this.MAP.tiles[mp] > 0) {
                     hx=rx; hy=ry; 
                     disH=dist(this.x,this.y,hx,hy); 
-                    dof=16; 
+                    dof=this.viewDistance; 
                     color=this.MAP.tiles[mp];
+                    rayLanded = true;
                 }
                 else {
                     rx+=xo;
@@ -181,9 +184,9 @@ class Player
             }
 
             //Looking straight up or down
-            if (ra == 0 || ra == PI ){rx=this.x; ry=this.y; dof=16;} 
+            if (ra == 0 || ra == PI ){rx=this.x; ry=this.y; dof=this.viewDistance;} 
             
-            while (dof<16)
+            while (dof<this.viewDistance)
             {
                 mx = Math.floor(rx>>6); 
                 my = Math.floor(ry>>6); 
@@ -192,8 +195,9 @@ class Player
                     vx=rx; 
                     vy=ry; 
                     disV=dist(this.x,this.y,vx,vy); 
-                    dof=16; 
+                    dof=this.viewDistance; 
                     color=this.MAP.tiles[mp];
+                    rayLanded = true
                 }
                 else {
                     rx+=xo; 
@@ -211,22 +215,26 @@ class Player
             .##.....##.##.......##....##..##..##.....##.##..........##........##..##...###.##.....##.##..........##....##..##.....##....##...
             .########..########..######..####.########..########....##.......####.##....##.##.....##.########....##.....##.##.....##....##...
             */
-            if (disV<disH)
+            
+            if (rayLanded)
             {
-                rx=vx;
-                ry=vy;
-                disT = disV;
-                let cArr = this.MAP.colors[color].bright;
-                fill(cArr[0], cArr[1], cArr[2]);
-            }
-
-            if (disH<disV)
-            {
-                rx=hx;
-                ry=hy;
-                disT = disH;
-                let cArr = this.MAP.colors[color].dark;
-                fill(cArr[0], cArr[1], cArr[2]);
+                if (disV<disH)
+                {
+                    rx=vx;
+                    ry=vy;
+                    disT = disV;
+                    let cArr = this.MAP.colors[color].bright;
+                    fill(cArr[0], cArr[1], cArr[2]);
+                }
+    
+                if (disH<disV)
+                {
+                    rx=hx;
+                    ry=hy;
+                    disT = disH;
+                    let cArr = this.MAP.colors[color].dark;
+                    fill(cArr[0], cArr[1], cArr[2]);
+                }
             }
 
             /*
@@ -249,27 +257,36 @@ class Player
 
             
             //Draw 3D View
-            let ca=this.angle-ra;
-            if (ca<0) ca+=2*PI;
-            if (ca>2*PI) ca-=2*PI;
-            disT=disT*Math.cos(ca); //fix fish eye
-
-            let lineH = (64 * 320)/disT;
-            if (lineH > 320) lineH = 320;
-            
-            let lineO = 150-lineH/2;
-
-            push();
-            if (DRAW_MAP)
+            if (rayLanded)
             {
-                translate(this.MAP.width * this.MAP.cellSize, 0);
-            }else{
-                scale(2,2);
+                let ca=this.angle-ra;
+                if (ca<0) ca+=2*PI;
+                if (ca>2*PI) ca-=2*PI;
+                disT=disT*Math.cos(ca); //fix fish eye
+    
+                let lineH = (64 * 320)/disT;
+                if (lineH > 320) lineH = 320;
+                
+                let lineO = 150-lineH/2;
+    
+                push();
+                if (DRAW_MAP)
+                {
+                    translate(this.MAP.width * this.MAP.cellSize, 0);
+                }else{
+                    scale(2,2);
+                }
+                
+                if (lineH > 320/this.viewDistance) //fix render issue of things out of view distance
+                {
+                    noStroke();
+                    rect(r*8,lineO,8,lineH);
+                }
+
+                pop();
+
             }
-            
-            noStroke();
-            rect(r*8,lineO,8,lineH);
-            pop();
+
 
 
             //iterate for next loop
