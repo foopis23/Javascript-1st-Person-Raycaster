@@ -12,7 +12,7 @@ class Player
         this.rotateSpeed = Math.PI / 64;
         this.angle = 0;
         this.MAP = map;
-        this.viewDistance = 8;
+        this.viewDistance = 10;
     }
 
     update()
@@ -119,7 +119,6 @@ class Player
         ra = this.angle-DR*30;
         if (ra<0) ra+=2*PI;
         if (ra>2*PI) ra-=2*PI;
-        console.log("START LOOP");
         for (r=0; r<60; r++)
         {
             let disT;
@@ -202,7 +201,7 @@ class Player
             if (ra > P2 && ra < P3){ 
                 rx= (Math.floor(Math.floor(this.x>>6)<<6)-0.0001); 
                 ry=(this.x-rx)*nTan+this.y; 
-                xo=-64; 
+                xo=-this.MAP.cellSize; 
                 yo=-xo*nTan;
             } 
             
@@ -210,7 +209,7 @@ class Player
             if (ra<P2 || ra>P3){ 
                 rx= (Math.floor(Math.floor(this.x>>6)<<6)+64); 
                 ry=(this.x-rx)*nTan+this.y; 
-                xo= 64; 
+                xo=this.MAP.cellSize; 
                 yo=-xo*nTan;
             }
 
@@ -313,7 +312,7 @@ class Player
                 if (ca>2*PI) ca-=2*PI;
                 disT=disT*Math.cos(ca); //fix fish eye
     
-                let lineH = (64 * 320)/disT;
+                let lineH = (this.MAP.cellSize * 320)/disT;
                 if (lineH > 320) lineH = 320;
                 
                 let lineO = 150-lineH/2;
@@ -334,16 +333,14 @@ class Player
                     
                     if (surfaceTexture)
                     {
-                        console.log(`${sx}, ${disT}`);
                         let sw = Math.min(Math.round(disT/32),1);
-                        copy(surfaceTexture, Math.min(sx, 64-sw), 0, sw, 64, r*8, lineO, 8, lineH);
+                        copy(surfaceTexture, Math.min(sx, surfaceTexture.width-sw), 0, sw, surfaceTexture.height, r*8, lineO, 8, lineH);
                     }else{
                         rect(r*8,lineO,8,lineH);
                     }
                 }
 
                 pop();
-
             }
 
 
@@ -353,7 +350,5 @@ class Player
             if (ra<0) ra+=2*PI;
             if (ra>2*PI) ra-=2*PI;
         }
-
-        console.log("END LOOP");
     }
 }

@@ -8,7 +8,9 @@ let player;
 function preload()
 {
     IMAGES = {};
-    IMAGES["test.png"] = loadImage('test.png');
+    IMAGES["wall"] = loadImage('wall.png');
+    IMAGES["wall_w_picture"] = loadImage('wall_w_picture.png');
+    IMAGES["wall_w_window"] = loadImage('wall_w_window.png');
 }
 
 function setup() {
@@ -22,10 +24,12 @@ function setup() {
 
     map = new Map();
     player = new Player(map);
+
 }
 
 function draw() {
     clear();
+    background(0,0,0)
 
     player.update();
 
