@@ -35,3 +35,9 @@ function draw() {
     fill(255);
     text(Math.round(frameRate()), 32, 64);
 }
+
+//util
+function clamp(number, min, max)
+{
+    return Math.max(min, Math.min(number, max));
+}

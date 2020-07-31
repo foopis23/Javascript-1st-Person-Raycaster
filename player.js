@@ -254,6 +254,8 @@ class Player
                     rx=vx;
                     ry=vy;
                     disT = disV;
+                    mx = Math.floor(rx>>6); 
+                    my = Math.floor(ry>>6); 
                     let surface = this.MAP.colors[vHitID];
                     if (surface.type=='color')
                     {
@@ -261,7 +263,7 @@ class Player
                         fill(cArr[0], cArr[1], cArr[2]);
                     }else{
                         surfaceTexture = surface.image;
-                        sx = Math.abs(ry - my * this.MAP.cellSize);
+                        sx = ry - my * this.MAP.cellSize;
                     }
                 }
     
@@ -270,14 +272,19 @@ class Player
                     rx=hx;
                     ry=hy;
                     disT = disH;
+                    mx = Math.floor(rx>>6); 
+                    my = Math.floor(ry>>6); 
                     let surface = this.MAP.colors[hHitID];
                     if (surface.type=='color')
                     {
                         let cArr = surface.dark;
                         fill(cArr[0], cArr[1], cArr[2]);
                     }else{
+                        let cArr = [0, 0, 0];
+                        fill(cArr[0], cArr[1], cArr[2]);
                         surfaceTexture = surface.image;
-                        sx = Math.abs(rx - mx * this.MAP.cellSize);
+                        
+                        sx = rx - mx * this.MAP.cellSize;
                     }
                 }
             }
@@ -325,14 +332,15 @@ class Player
                 if (lineH > 320/this.viewDistance) //fix render issue of things out of view distance
                 {
                     noStroke();
-
+                    
+                    rect(r*8,lineO,8,lineH);
+                    
                     if (surfaceTexture)
                     {
-                        console.log(disT/64);
-                        
-                        copy(surfaceTexture, sx, 0, disT/1000000, 64, r*8, lineO, 8, lineH);
+                        console.log(`${sx} ${Math.min(disT/64, 1)}`)
+                        copy(surfaceTexture, sx, 0, Math.min(disT/64, 1), 64, r*8, lineO, 8, lineH);
                     }else{
-                        rect(r*8,lineO,8,lineH);
+
                     }
                 }
 
