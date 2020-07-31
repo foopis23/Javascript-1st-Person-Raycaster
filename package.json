@@ -1,11 +1,22 @@
 {
   "name": "raycaster",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "I wanted to mess around to figure out how a raycaster actually works.",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foopis23/Javascript-1st-Person-Raycaster.git"
+  },
+  "bugs": {
+    "url": "https://github.com/foopis23/Javascript-1st-Person-Raycaster/issues"
+  },
+  "homepage": "https://github.com/foopis23/Javascript-1st-Person-Raycaster#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }

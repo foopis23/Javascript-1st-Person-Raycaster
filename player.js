@@ -114,7 +114,7 @@ class Player
 
     doRayCast()
     {
-        let r,mx,my,mp,dof,rx,ry,ra,xo,yo,vColor, hColor;
+        let r,mx,my,mp,dof,rx,ry,ra,xo,yo,vHitID,hHitID;
         let rayLanded = false;
         ra = this.angle-DR*30;
         if (ra<0) ra+=2*PI;
@@ -172,7 +172,7 @@ class Player
                     hx=rx; hy=ry; 
                     disH=dist(this.x,this.y,hx,hy); 
                     dof=this.viewDistance; 
-                    hColor=this.MAP.tiles[mp];
+                    hHitID=this.MAP.tiles[mp];
                     rayLanded = true;
                 }
                 else {
@@ -227,7 +227,7 @@ class Player
                     vy=ry; 
                     disV=dist(this.x,this.y,vx,vy); 
                     dof=this.viewDistance; 
-                    vColor=this.MAP.tiles[mp];
+                    vHitID=this.MAP.tiles[mp];
                     rayLanded = true
                 }
                 else {
@@ -246,7 +246,7 @@ class Player
             .##.....##.##.......##....##..##..##.....##.##..........##........##..##...###.##.....##.##..........##....##..##.....##....##...
             .########..########..######..####.########..########....##.......####.##....##.##.....##.########....##.....##.##.....##....##...
             */
-            
+            let surfaceTexture, sx;
             if (rayLanded)
             {
                 if (disV<disH)
@@ -254,8 +254,15 @@ class Player
                     rx=vx;
                     ry=vy;
                     disT = disV;
-                    let cArr = this.MAP.colors[vColor].bright;
-                    fill(cArr[0], cArr[1], cArr[2]);
+                    let surface = this.MAP.colors[vHitID];
+                    if (surface.type=='color')
+                    {
+                        let cArr = surface.bright;
+                        fill(cArr[0], cArr[1], cArr[2]);
+                    }else{
+                        surfaceTexture = surface.image;
+                        sx = Math.abs(ry - my * this.MAP.cellSize);
+                    }
                 }
     
                 if (disH<disV)
@@ -263,8 +270,15 @@ class Player
                     rx=hx;
                     ry=hy;
                     disT = disH;
-                    let cArr = this.MAP.colors[hColor].dark;
-                    fill(cArr[0], cArr[1], cArr[2]);
+                    let surface = this.MAP.colors[hHitID];
+                    if (surface.type=='color')
+                    {
+                        let cArr = surface.dark;
+                        fill(cArr[0], cArr[1], cArr[2]);
+                    }else{
+                        surfaceTexture = surface.image;
+                        sx = Math.abs(rx - mx * this.MAP.cellSize);
+                    }
                 }
             }
 
@@ -311,7 +325,15 @@ class Player
                 if (lineH > 320/this.viewDistance) //fix render issue of things out of view distance
                 {
                     noStroke();
-                    rect(r*8,lineO,8,lineH);
+
+                    if (surfaceTexture)
+                    {
+                        console.log(disT/64);
+                        
+                        copy(surfaceTexture, sx, 0, disT/1000000, 64, r*8, lineO, 8, lineH);
+                    }else{
+                        rect(r*8,lineO,8,lineH);
+                    }
                 }
 
                 pop();

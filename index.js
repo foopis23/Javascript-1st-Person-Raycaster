@@ -1,7 +1,15 @@
 const DRAW_MAP = false;
 
+var IMAGES;
+
 let map;
 let player;
+
+function preload()
+{
+    IMAGES = {};
+    IMAGES["test.png"] = loadImage('/test.png');
+}
 
 function setup() {
     
