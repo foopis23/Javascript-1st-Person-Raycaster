@@ -119,7 +119,7 @@ class Player
         ra = this.angle-DR*30;
         if (ra<0) ra+=2*PI;
         if (ra>2*PI) ra-=2*PI;
-
+        console.log("START LOOP");
         for (r=0; r<60; r++)
         {
             let disT;
@@ -263,7 +263,7 @@ class Player
                         fill(cArr[0], cArr[1], cArr[2]);
                     }else{
                         surfaceTexture = surface.image;
-                        sx = ry - my * this.MAP.cellSize;
+                        sx = Math.round(ry - my * this.MAP.cellSize);
                     }
                 }
     
@@ -280,11 +280,8 @@ class Player
                         let cArr = surface.dark;
                         fill(cArr[0], cArr[1], cArr[2]);
                     }else{
-                        let cArr = [0, 0, 0];
-                        fill(cArr[0], cArr[1], cArr[2]);
                         surfaceTexture = surface.image;
-                        
-                        sx = rx - mx * this.MAP.cellSize;
+                        sx = Math.round(rx - mx * this.MAP.cellSize);
                     }
                 }
             }
@@ -333,14 +330,15 @@ class Player
                 {
                     noStroke();
                     
-                    rect(r*8,lineO,8,lineH);
+
                     
                     if (surfaceTexture)
                     {
-                        console.log(`${sx} ${Math.min(disT/64, 1)}`)
-                        copy(surfaceTexture, sx, 0, Math.min(disT/64, 1), 64, r*8, lineO, 8, lineH);
+                        console.log(`${sx}, ${disT}`);
+                        let sw = Math.min(Math.round(disT/32),1);
+                        copy(surfaceTexture, Math.min(sx, 64-sw), 0, sw, 64, r*8, lineO, 8, lineH);
                     }else{
-
+                        rect(r*8,lineO,8,lineH);
                     }
                 }
 
@@ -355,5 +353,7 @@ class Player
             if (ra<0) ra+=2*PI;
             if (ra>2*PI) ra-=2*PI;
         }
+
+        console.log("END LOOP");
     }
 }
