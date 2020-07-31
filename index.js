@@ -8,7 +8,7 @@ let player;
 function preload()
 {
     IMAGES = {};
-    IMAGES["test.png"] = loadImage('/test.png');
+    IMAGES["test.png"] = loadImage('test.png');
 }
 
 function setup() {
