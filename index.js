@@ -11,6 +11,8 @@ function preload()
     IMAGES["wall"] = loadImage('wall.png');
     IMAGES["wall_grey"] = loadImage('wall_grey.png');
     IMAGES["wall_blue_window"] = loadImage('wall_blue_window.png');
+    IMAGES["wall_blue"] = loadImage('wall_blue.png');
+
 }
 
 function setup() {
