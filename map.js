@@ -3,18 +3,18 @@ class Map {
         this.width = 16;
         this.height = 8;
         this.cellSize = 64; //NOTE: This needs to be a power of 2, probably don't change this
-        this.floorColor = [214, 199, 180];
+        this.floorColor = [19, 34, 49];
         this.roofColor = [0, 0, 0];
 
         this.tiles = [
-            4, 4, 6, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 5, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
             4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4,
             4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4,
             4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4,
             4, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 4, 4, 0, 4, 4,
             4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
             4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 4, 4, 6, 4, 4, 4, 6, 4, 4, 4, 6, 4, 4, 4, 4,
+            4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4,
         ];
 
         this.colors = [
@@ -40,15 +40,11 @@ class Map {
             },
             {
                 type: 'texture',
-                image: IMAGES['wall']
+                image: IMAGES['wall_grey']
             },
             {
                 type: 'texture',
-                image: IMAGES['wall_w_picture']
-            },
-            {
-                type: 'texture',
-                image: IMAGES['wall_w_window']
+                image: IMAGES['wall_blue_window']
             }
         ];
     }

@@ -9,8 +9,8 @@ function preload()
 {
     IMAGES = {};
     IMAGES["wall"] = loadImage('wall.png');
-    IMAGES["wall_w_picture"] = loadImage('wall_w_picture.png');
-    IMAGES["wall_w_window"] = loadImage('wall_w_window.png');
+    IMAGES["wall_grey"] = loadImage('wall_grey.png');
+    IMAGES["wall_blue_window"] = loadImage('wall_blue_window.png');
 }
 
 function setup() {
